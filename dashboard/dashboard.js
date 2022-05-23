@@ -9,10 +9,7 @@ const jsonconfig = require("../config.json");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const Strategy = require("passport-discord").Strategy;
-const premiumWeb = new Discord.WebhookClient({
-  id: jsonconfig.webhook_id,
-  url: "https://discord.com/api/webhooks/971703492295159808/Rdn5yhM0goP_PQGnpufe4_I8vJaMEHlt0WV_FCXJMmPyBHq29rw5kuUwcd_elMQQ_E8h",
-});
+
 const config = require("../config");
 const ejs = require("ejs");
 
@@ -23,6 +20,10 @@ const sendingEmbed = new Set();
 const bodyParser = require("body-parser");
 const { readdirSync } = require("fs");
 const { WebhookClient, MessageEmbed } = require("discord.js");
+
+const premiumWeb = new Discord.WebhookClient({
+  url: jsonconfig.webhook_url,
+});
 const DBL = require("@top-gg/sdk");
 const mongoose = require("mongoose");
 const User = require("../database/schemas/User");
@@ -120,7 +121,7 @@ module.exports = async (client) => {
     var hostname = req.headers.host;
     var pathname = url.parse(req.url).pathname;
     const baseData = {
-      https: "https://",
+      https: hostname.includes('localhost') ? 'http://' : 'https://',
       domain: domain,
       bot: client,
       hostname: hostname,
@@ -230,13 +231,6 @@ module.exports = async (client) => {
     }
   );
 
-  // Features list redirect endpoint.
-  app.get("/commands", (req, res) => {
-    var fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
-    renderTemplate(res, req, "features.ejs", {
-      urlSite: fullUrl,
-    });
-  });
   app.get("/color", (req, res) => {
     var url = req.protocol + "://" + req.get("host") + req.originalUrl;
     renderTemplate(res, req, "color.ejs", {
@@ -291,7 +285,7 @@ module.exports = async (client) => {
     if (req.user) {
       const member = await client.users.fetch(req.user.id);
       if (member) {
-        const logoutLogs = new WebhookClient("", "");
+        const logoutLogs = new WebhookClient({ url: config.webhook_url });
 
         const logout = new MessageEmbed()
           .setColor("RED")
@@ -452,13 +446,14 @@ module.exports = async (client) => {
     });
 
     if (!db) {
-      let newAppDB = new app({
+      let newAppDB = new Application
+      ({
         guildID: guild.id,
         questions: [],
         appToggle: false,
         appLogs: null,
       });
-      await newAppDB.save().catch(() => {});
+      await newAppDB.save();
 
       db = await Application.findOne({
         guildID: guild.id,
@@ -3451,7 +3446,7 @@ send
 
   app.post("/report", async (req, res) => {
     if (req.body.type === "report") {
-      const reportEmbed = new WebhookClient("", "");
+      const reportEmbed = new WebhookClient({ url: config.webhook_url });
 
       const report = new MessageEmbed()
         .setColor("GREEN")
@@ -3470,7 +3465,7 @@ send
 
   app.post("/contact", async (req, res) => {
     if (req.body.type === "contact") {
-      const contactEmbed = new WebhookClient("", "");
+      const contactEmbed = new WebhookClient({ url: config.webhook_url });
 
       const contact = new MessageEmbed()
         .setColor("GREEN")
@@ -4776,6 +4771,6 @@ In the mean time, please explain your issue below`;
   });
 
   app.listen(config.port, null, null, () =>
-    console.log(`Dashboard is up and running on port ${config.port}.`)
+    console.log(`Dashboard is up and running on port http://localhost:${config.port}.`)
   );
 };

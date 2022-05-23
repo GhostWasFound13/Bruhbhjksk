@@ -109,10 +109,11 @@ module.exports = class AeonaClient extends Client {
 
   async start(token = this.token) {
     this.utils.loadCommands();
-    this.utils
-      .loadEvents()
+    if (!process.env.DEV)
+      this.utils
+        .loadEvents()
 
-      .catch((e) => console.log(e));
+        .catch((e) => console.log(e));
 
     this.mongoose.init();
     this.login(this.token);
