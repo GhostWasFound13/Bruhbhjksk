@@ -3,11 +3,10 @@ const config = require("./config.json.js");
 const domain = require("./config.js");
 const logger = require("./utils/logger");
 const Aeona = new AeonaClient(config);
-
 const color = require("./data/colors");
 Aeona.color = color;
 
-Aeona.domain = domain.domain || `https://Aeona.xyz`;
+Aeona.domain = domain.domain || `https://aeona.xyz`;
 
 const emoji = require("./data/emoji");
 Aeona.emoji = emoji;
@@ -31,6 +30,7 @@ process.on("uncaughtException", (error) => {
   //Show the error stack in the console
   console.error(error.stack);
 });
+
 const http = require("https");
 function randomString(length, chars) {
   var result = "";

@@ -21,14 +21,14 @@
 
 <body class="text-white h-screen w-screen bg-gradient-to-r from-violet-700 to-violet-900  text-lg">
   <div class="bg-[url('https://www.aeona.xyz/svg/background-1.svg')] bg-repeat h-screen w-screen      scroll-smooth overflow-y-auto ">
-    <article class="prose prose-invert  max-w-none text-white p-5 break-words overflow-x-hidden box-border">
+    <article class="prose prose-invert  max-w-none text-white break-words overflow-x-hidden box-border pt-10 p-5">
     
       <% if(user){ %>
       <% if (user.avatar) { avatar="https://cdn.discordapp.com/avatars/" + user.id + "/" +
                     user.avatar+".png?size=128" ; } else {
                     avatar="https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404.png?v=1602412158188"
                     ; } %>
-      <nav class="w-full mb-20 not-prose ">
+      <nav class="w-full mb-20 not-prose">
         <div class="container flex flex-wrap justify-between items-center mx-auto">
           
           <a href="https://www.aeona.xyz/" class="flex items-center  md:pr-2">
