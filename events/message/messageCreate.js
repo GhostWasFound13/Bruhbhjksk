@@ -784,7 +784,7 @@ async function execute(message, prefix, i, chatbot) {
         }
         if (!reply.startsWith("{") && reply != "") {
           let comp = [];
-          if (Math.random() * 100 < 15) {
+          if (Math.random() * 100 < 30) {
             comp = [
               new Discord.MessageActionRow().addComponents(
                 new Discord.MessageButton()
@@ -804,6 +804,10 @@ async function execute(message, prefix, i, chatbot) {
                 new Discord.MessageButton()
                   .setLabel("Vote")
                   .setURL("https://top.gg/bot/931226824753700934/vote")
+                  .setStyle("LINK"),
+                new Discord.MessageButton()
+                  .setLabel("Premium")
+                  .setURL("https://aeona.xyz/premium")
                   .setStyle("LINK")
               ),
             ];
