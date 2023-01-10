@@ -1,4 +1,4 @@
-module.exports = {
+"" module.exports = {
   // Stauts config
   display_status: "online", // online | idle | invisible | dnd
   options: {
@@ -165,3 +165,4 @@ module.exports = {
     "( ͡° ͜ʖ ͡°)",
   ],
 };
+""
